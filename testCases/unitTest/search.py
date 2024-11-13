@@ -7,8 +7,11 @@ class Search:
         self.driver = driver
 
     def perform_input(self, input_id, value):
-        self.driver.find_element(By.ID, input_id).click()
-        self.driver.find_element(By.ID, input_id).send_keys(value)
+        if value == "":
+            self.driver.find_element(By.ID, input_id).clear()
+        else: 
+            self.driver.find_element(By.ID, input_id).click()
+            self.driver.find_element(By.ID, input_id).send_keys(value)
         time.sleep(1)
         
     def perform_list(self, input_id, value):

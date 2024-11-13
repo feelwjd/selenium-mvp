@@ -28,11 +28,18 @@ class userManagePage:
     select_use_yn       = "MVP9000_sel_useYn"
     select_lock_lock    = "MVP9000_sel_accountLockYn"
     select_delete_yn    = "MVP9000_sel_deleteYn"
+    select_item_perPage = "MVP9000_sel_itemsPerPage"
+    button_pagnation    = "MVP9000_btn_pagination"
     
     select_list_first   = ".rounded-0:nth-child(2)"
     select_list_second  = ".rounded-0:nth-child(3)"
     select_list_third   = ".rounded-0:nth-child(4)"
     
+    select_page_first   = ".v-pagination__item:nth-child(2)"
+    select_page_second  = ".v-pagination__item:nth-child(3)"
+    select_page_third   = ".v-pagination__item:nth-child(4)"
+    select_page_next    = ".mdi-chevron-right"
+    select_page_prev    = ".mdi-chevron-left"
     
     """
     INPUT 값 설정
@@ -99,6 +106,32 @@ class userManagePage:
             self.search.perform_list(self.select_delete_yn, self.select_list_third)
             self.driver.find_element(By.ID, self.button_search).click()
             self.screen_shot.take_screenshot(f"userManage_page_add_{self.select_delete_yn}")
+            
+            # 조회 조건 초기화
+            self.search.perform_input(self.input_department, "")
+            self.search.perform_input(self.input_userId, "")
+            self.search.perform_input(self.input_userNm, "")
+            self.search.perform_list(self.select_use_yn, self.select_list_first)
+            self.search.perform_list(self.select_lock_lock, self.select_list_first)
+            self.search.perform_list(self.select_delete_yn, self.select_list_first)
+            self.driver.find_element(By.ID, self.button_search).click()
+            
+            ## 조회 조건 - 페이지네이션
+            self.search.perform_list(self.select_item_perPage, self.select_list_first)
+            self.screen_shot.take_screenshot(f"userManage_page_add_{self.select_item_perPage}")
+            
+            ## 조회 조건 - 2번 탭
+            self.driver.find_element(By.CSS_SELECTOR, self.select_page_second).click()
+            self.screen_shot.take_screenshot(f"userManage_page_add_{self.button_pagnation}_pageSecond")
+            ## 조회 조건 - 1번 탭
+            self.driver.find_element(By.CSS_SELECTOR, self.select_page_first).click()
+            self.screen_shot.take_screenshot(f"userManage_page_add_{self.button_pagnation}_pageFirst")
+            ## 조회 조건 - 다음 페이지
+            self.driver.find_element(By.CSS_SELECTOR, self.select_page_next).click()
+            self.screen_shot.take_screenshot(f"userManage_page_add_{self.button_pagnation}_pageNext")
+            ## 조회 조건 - 이전 페이지
+            self.driver.find_element(By.CSS_SELECTOR, self.select_page_prev).click()
+            self.screen_shot.take_screenshot(f"userManage_page_add_{self.button_pagnation}_pagePrev")
             
         except Exception as e:
             print('  Failed to compile, exception is %s' % repr(e))
