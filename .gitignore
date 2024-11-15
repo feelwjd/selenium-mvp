@@ -4,3 +4,4 @@ __pycache__
 *.side
 *.png
 screenShot/**
+.DS_Store
